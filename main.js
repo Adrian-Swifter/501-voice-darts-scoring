@@ -18,12 +18,12 @@ arroffids.forEach((i, index) => {
         alert("Game Over!!!!");
       } else if (currentScoreRight < 0) {
         document.getElementById("right").value = document.getElementById("right").value;
-        currentScoreRight = Number(currentScoreRight) + Number(i.value);
-        console.log(i.value)
+        currentScoreRight = Number(currentScoreRight) + i.value;
+        console.log(typeof i.value)
       } else {
         document.getElementById("right").value = currentScoreLeft;
       }
-      console.log(currentScoreRight)
+      console.log(typeof currentScoreRight)
     }
   });
 });
