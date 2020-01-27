@@ -27,15 +27,6 @@ for (let i = 1; i < 29; i++) {
 
 arroffids.forEach((i, index) => {
   i.addEventListener("focusout", () => {
-    // recognition.start();
-    // console.log('Ready to receive a number command.');
-    // recognition.onresult = function(event) {
-    //   var last = event.results.length - 1;
-    //   var number = event.results[last][0].transcript;
-    //   resultSpeech.innerText = 'Result received: ' + number + '.';
-    //   arroffids[index].value = number;
-    //   console.log('Confidence: ' + event.results[0][0].confidence);
-    // }
     if (index % 2 === 0) {
       currentScoreLeft = currentScoreLeft - Math.abs(i.value);
       if (currentScoreLeft === 0) {
@@ -85,3 +76,5 @@ arroffids.forEach((i, index) => {
       }
     });
 });
+
+
