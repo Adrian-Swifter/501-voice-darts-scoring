@@ -7,7 +7,21 @@ html, body {
     padding: 0;
 }
 
-input {
+.score-wrapper input {
     width: 50%;
     float: left;
+}
+
+.wrapper {
+    max-width: 80%;
+    margin: auto;
+}
+
+.player-names {
+    display: flex;
+    justify-content:  space-between;
+}
+
+.player {
+    cursor: pointer;
 }
