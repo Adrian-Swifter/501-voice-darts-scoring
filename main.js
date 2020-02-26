@@ -2,13 +2,12 @@ var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition
 var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList
 var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent
 
-var numbers = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "twenty six","sixty", "eighty", "one hundred", "one hundred and forthy", "one hundred and eighty"];
-var grammar = '#JSGF V1.0; grammar numbers; public <number> = ' + numbers.join(' | ') + ' ;'
+let numbers = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "twenty six","sixty", "eighty", "one hundred", "one hundred and forthy", "one hundred and eighty"];
+let grammar = '#JSGF V1.0; grammar numbers; public <number> = ' + numbers.join(' | ') + ' ;'
 
-var recognition = new SpeechRecognition();
-var speechRecognitionList = new SpeechGrammarList();
+let recognition = new SpeechRecognition();
+let speechRecognitionList = new SpeechGrammarList();
 
-let resultSpeech = document.getElementById("resultSpeech");
 let arroffids = [];
 let currentScoreLeft = 501;
 let currentScoreRight = 501;
@@ -65,19 +64,26 @@ arroffids.forEach((i, index) => {
     }
   });
 
-    
+    //START VOICE RECOGNITION ON INPUT CLICK
     i.addEventListener("click", () => {
       recognition.start();
       console.log('Ready to receive a number command.');
       recognition.onresult = function(event) {
-        var last = event.results.length - 1;
-        var number = event.results[last][0].transcript;
-        resultSpeech.innerText = 'Result received: ' + number + '.';
-        arroffids[index].value = number;
-        console.log(arroffids[index]);
-        console.log('Confidence: ' + event.results[0][0].confidence);
+        let last = event.results.length - 1;
+        let number = event.results[last][0].transcript;
+        arroffids[index].value = number; 
       }
     });
+
+    //POLLING THE INPUT FOR CHANGE VALUE AND THEN FOCUSING NEXT INPUT ELEMENT
+    let lastInputValue = i.value;
+    setInterval(function() {
+        let newValue = i.value;
+        if (lastInputValue != newValue && newValue <= 180) {
+            lastInputValue = newValue;
+            arroffids[index + 1].focus();
+        }
+    }, 100);
 });
 
 //PLAYER NAMES
