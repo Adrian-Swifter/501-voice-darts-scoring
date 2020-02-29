@@ -13,6 +13,8 @@ let currentScoreLeft = 501;
 let currentScoreRight = 501;
 let leftScore = document.getElementById("left");
 let rightScore = document.getElementById("right");
+let scoreInputArr = Array.from(document.getElementsByClassName('score-input'));
+let numOfClicks = 0;
 
 speechRecognitionList.addFromString(grammar, 1);
 recognition.grammars = speechRecognitionList;
@@ -21,9 +23,10 @@ recognition.interimResults = false;
 recognition.maxAlternatives = 1;
 
 //GET ALL THE ID's OF SCORE INPUTS
-for (let i = 1; i < 29; i++) {
+for (let i = 1; i <= scoreInputArr.length; i++) {
   arroffids.push(document.getElementById(`score_${i}`));
 }
+
 //SCORE SUBSTRACTING AND LOGIC
 arroffids.forEach((i, index) => {
   i.addEventListener("focusout", () => {
@@ -64,26 +67,31 @@ arroffids.forEach((i, index) => {
     }
   });
 
-    //START VOICE RECOGNITION ON INPUT CLICK
-    i.addEventListener("click", () => {
+  //START VOICE RECOGNITION ON INPUT CLICK
+  i.addEventListener("click", () => {
+    numOfClicks++;
+
+    if(numOfClicks > 1) {
       recognition.start();
       console.log('Ready to receive a number command.');
       recognition.onresult = function(event) {
         let last = event.results.length - 1;
         let number = event.results[last][0].transcript;
         arroffids[index].value = number; 
+        numOfClicks = 0;
       }
-    });
 
-    //POLLING THE INPUT FOR CHANGE VALUE AND THEN FOCUSING NEXT INPUT ELEMENT
-    let lastInputValue = i.value;
-    setInterval(function() {
-        let newValue = i.value;
-        if (lastInputValue != newValue && newValue <= 180) {
-            lastInputValue = newValue;
-            arroffids[index + 1].focus();
-        }
-    }, 100);
+      //POLLING THE INPUT FOR CHANGE VALUE AND THEN FOCUSING NEXT INPUT ELEMENT
+      let lastInputValue = i.value;
+      setInterval(function() {
+          let newValue = i.value;
+          if (lastInputValue != newValue && newValue <= 180) {
+              lastInputValue = newValue;
+              arroffids[index + 1].focus();
+          }
+      }, 100);
+    }  
+  });
 });
 
 //PLAYER NAMES
