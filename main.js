@@ -33,7 +33,7 @@ arroffids.forEach((i, index) => {
     if (index % 2 === 0) {
       currentScoreLeft = currentScoreLeft - Math.abs(i.value);
       if (currentScoreLeft === 0) {
-        alert("Game Over!!!!");
+        alert("Game Over!!!");
         window.location.href = window.location.href
       } else if (Math.abs(i.value > 180)) {
         leftScore.value = leftScore.value;
