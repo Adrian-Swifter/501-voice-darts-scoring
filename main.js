@@ -45,7 +45,7 @@ recognition.maxAlternatives = 1;
 
 //GET ALL THE ID's OF SCORE INPUTS
 for (let i = 1; i <= scoreInputArr.length; i++) {
-  arroffids.push(document.getElementById(`score_${i}`));
+  arroffids.push(document.querySelector(`#score_${i}`));
 }
 
 //SCORE SUBSTRACTING AND LOGIC
@@ -116,7 +116,6 @@ arroffids.forEach((i, index) => {
 })();
 
 //FUNCTION TO CHECK THE SCORE AND SUBTRACT
-
 function checkScore(currentScore, score, currentElement, index) {
   if (currentScore === 0) {
     alert("Game Over!!!");
