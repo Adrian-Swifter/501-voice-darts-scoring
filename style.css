@@ -25,3 +25,7 @@ html, body {
 .player {
     cursor: pointer;
 }
+
+body {
+    overflow: hidden;
+}
