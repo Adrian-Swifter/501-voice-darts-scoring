@@ -85,11 +85,6 @@ function checkScore(currentScore, score, currentElement, index) {
   if (currentScore === 0) {
     alert("Game Over!!!");
     window.location.href = window.location.href;
-  } else if (Math.abs(currentElement.value > 180)) {
-    score.value = score.value;
-    currentScore =
-      Number(currentScore) + Math.abs(Number(currentElement.value));
-    arroffids[index].focus();
   } else if (currentScore < 2) {
     score.value = score.value;
     currentScore =
@@ -120,26 +115,31 @@ function createNewInputs(currentIndex) {
 
 function recursivelySubstractScoreAndAddNewScoreInputs(arrayOfElements) {
   arrayOfElements.forEach((i, index) => {
-    i.addEventListener("focusout", () => {
-      if (
-        i.getAttribute("id").split("_")[1] >= 6 &&
-        Number(i.getAttribute("id").split("_")[1]) % 2 === 0
-      ) {
-        createNewInputs(Number(i.getAttribute("id").split("_")[1]));
-        scoreInputArr = Array.from(document.querySelectorAll(".score-input"));
-        for (let i = 1; i <= scoreInputArr.length; i++) {
-          if (!arroffids.includes(document.querySelector(`#score_${i}`)))
-            arroffids.push(document.querySelector(`#score_${i}`));
+    i.addEventListener("keyup", (e) => {
+      if (e.keyCode === 13 && i.value <= 180) {
+        console.log(i.value);
+        if (
+          i.getAttribute("id").split("_")[1] >= 6 &&
+          Number(i.getAttribute("id").split("_")[1]) % 2 === 0
+        ) {
+          createNewInputs(Number(i.getAttribute("id").split("_")[1]));
+          scoreInputArr = Array.from(document.querySelectorAll(".score-input"));
+          for (let i = 1; i <= scoreInputArr.length; i++) {
+            if (!arroffids.includes(document.querySelector(`#score_${i}`)))
+              arroffids.push(document.querySelector(`#score_${i}`));
+          }
+          recursivelySubstractScoreAndAddNewScoreInputs(arroffids);
         }
-        recursivelySubstractScoreAndAddNewScoreInputs(arroffids);
-      }
 
-      if (index % 2 === 0) {
-        currentScoreLeft = currentScoreLeft - Math.abs(i.value);
-        checkScore(currentScoreLeft, leftScore, i, index);
-      } else {
-        currentScoreRight = currentScoreRight - Math.abs(i.value);
-        checkScore(currentScoreRight, rightScore, i, index);
+        if (index % 2 === 0) {
+          currentScoreLeft = currentScoreLeft - Math.abs(i.value);
+          checkScore(currentScoreLeft, leftScore, i, index);
+        } else {
+          currentScoreRight = currentScoreRight - Math.abs(i.value);
+          checkScore(currentScoreRight, rightScore, i, index);
+        }
+
+        arrayOfElements[index + 1].focus();
       }
     });
 
