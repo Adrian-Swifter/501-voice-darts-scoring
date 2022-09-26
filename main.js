@@ -96,6 +96,7 @@ function checkScore(currentScore, score, currentElement, index) {
   }
 }
 
+//CREATE PAIR OF INPUTS WHEN THE MINIMUM NEEDED INPUTS NUMBER IS EXCEEDED
 function createNewInputs(currentIndex) {
   const newInput1 = document.createElement("input");
   newInput1.className = "score-input";
@@ -118,6 +119,7 @@ function recursivelySubstractScoreAndAddNewScoreInputs(arrayOfElements) {
     i.addEventListener("keyup", (e) => {
       if (e.keyCode === 13 && i.value <= 180) {
         console.log(i.value);
+        //CHECKNG TO SEE IF THE NUMBER OF 
         if (
           i.getAttribute("id").split("_")[1] >= 6 &&
           Number(i.getAttribute("id").split("_")[1]) % 2 === 0
@@ -156,16 +158,6 @@ function recursivelySubstractScoreAndAddNewScoreInputs(arrayOfElements) {
           arroffids[index].value = number;
           numOfClicks = 0;
         };
-
-        //POLLING THE INPUT FOR CHANGE VALUE AND THEN FOCUSING NEXT INPUT ELEMENT
-        let lastInputValue = i.value;
-        setInterval(function () {
-          let newValue = i.value;
-          if (lastInputValue != newValue && newValue <= 180) {
-            lastInputValue = newValue;
-            arroffids[index + 1].focus();
-          }
-        }, 100);
       }
     });
   });
