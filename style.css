@@ -1,31 +1,33 @@
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
-html, body {
-    margin: 0;
-    padding: 0;
+html,
+body {
+  margin: 0;
+  padding: 0;
 }
 
 .score-wrapper input {
-    width: 50%;
-    float: left;
+  width: 50%;
+  float: left;
 }
 
 .wrapper {
-    max-width: 80%;
-    margin: auto;
+  max-width: 600px;
+  width: 90%;
+  margin: auto;
 }
 
 .player-names {
-    display: flex;
-    justify-content:  space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .player {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 body {
-    overflow: hidden;
+  overflow: hidden;
 }
