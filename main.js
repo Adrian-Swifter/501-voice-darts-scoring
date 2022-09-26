@@ -35,7 +35,7 @@ let currentScoreRight = 501;
 let leftScore = document.getElementById("left");
 let rightScore = document.getElementById("right");
 let scoreInputArr = Array.from(document.querySelectorAll(".score-input"));
-let numOfClicks = 0;
+let tempArrOfInputs = [];
 const scoreInputs = document.getElementsByClassName("score-inputs")[0];
 
 speechRecognitionList.addFromString(grammar, 1);
@@ -119,7 +119,7 @@ function recursivelySubstractScoreAndAddNewScoreInputs(arrayOfElements) {
     i.addEventListener("keyup", (e) => {
       if (e.keyCode === 13 && i.value <= 180) {
         console.log(i.value);
-        //CHECKNG TO SEE IF THE NUMBER OF 
+        //CREATING NEW INPUTS IF NEEDED AND UPDATING ARRAY WITH ALL THE SCORE INPUTS
         if (
           i.getAttribute("id").split("_")[1] >= 6 &&
           Number(i.getAttribute("id").split("_")[1]) % 2 === 0
@@ -147,9 +147,12 @@ function recursivelySubstractScoreAndAddNewScoreInputs(arrayOfElements) {
 
     //START VOICE RECOGNITION ON INPUT CLICK
     i.addEventListener("click", () => {
-      numOfClicks++;
-
-      if (numOfClicks > 1) {
+      //CHECK TO SEE IF WE ARE CLICKING THE SAME INPUT TWICE TO START VOICE RECOGNITION
+      tempArrOfInputs.push(arroffids[index]);
+      if (
+        tempArrOfInputs.length === 2 &&
+        tempArrOfInputs.every((el) => el === tempArrOfInputs[0])
+      ) {
         recognition.start();
         console.log("Ready to receive a number command.");
         recognition.onresult = function (event) {
@@ -158,6 +161,10 @@ function recursivelySubstractScoreAndAddNewScoreInputs(arrayOfElements) {
           arroffids[index].value = number;
           numOfClicks = 0;
         };
+      }
+
+      if (tempArrOfInputs.length === 2) {
+        tempArrOfInputs.length = 0;
       }
     });
   });
